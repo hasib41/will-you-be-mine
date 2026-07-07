@@ -29,12 +29,17 @@
 
     <section class="card" aria-labelledby="question">
       <div class="media">
-        <!-- Muted looping videos stand in for gifs: far lighter & smoother -->
+        <!-- Muted looping videos stand in for gifs: far lighter & smoother.
+             Posters paint instantly and stay visible if a phone blocks muted
+             autoplay (Low Power Mode / data saver). The heavy "yes" clip is
+             preload="none" so it never slows first load — JS warms it later. -->
         <video id="cat-ask" class="cat is-visible" src="./cat-ask.mp4"
-               autoplay loop muted playsinline
+               poster="./poster-ask.jpg"
+               autoplay loop muted playsinline webkit-playsinline preload="auto"
                aria-label="A shy kitten peeking out from behind its paw"></video>
         <video id="cat-yes" class="cat" src="./cat-yes.mp4"
-               loop muted playsinline preload="auto"
+               poster="./poster-yes.jpg"
+               loop muted playsinline webkit-playsinline preload="none"
                aria-label="A happy kitten hugging its own paws with joy"></video>
       </div>
 

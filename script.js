@@ -235,6 +235,26 @@ document.addEventListener('visibilitychange', () => {
 });
 
 /* ------------------------------------------------------------------ *
+ * Mobile playback resilience.
+ * Phones frequently block muted autoplay (Low Power Mode, data saver,
+ * strict autoplay policy). The <video> posters keep a cat visible no matter
+ * what; these fallbacks start playback the moment it's permitted and lazily
+ * warm the preload="none" "yes" clip so the reveal is ready without slowing
+ * the first paint.
+ * ------------------------------------------------------------------ */
+[catAsk, catYes].forEach((v) => { v.muted = true; }); // property, not just the attribute
+catAsk.play?.().catch(() => {});                       // nudge autoplay on load
+
+const warmYes = () => { try { catYes.load(); } catch (_) {} };
+if ('requestIdleCallback' in window) requestIdleCallback(warmYes, { timeout: 2000 });
+else setTimeout(warmYes, 1200);
+
+// Last resort: the first real user gesture reliably unlocks playback.
+const kickstart = () => (won ? catYes : catAsk).play?.().catch(() => {});
+window.addEventListener('pointerdown', kickstart, { once: true, passive: true });
+window.addEventListener('touchstart', kickstart, { once: true, passive: true });
+
+/* ------------------------------------------------------------------ *
  * Recording hook — ONLY when the page is opened with ?record.
  * The live site stays fully manual; the showcase rig drives these.
  * ------------------------------------------------------------------ */
