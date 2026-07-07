@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="A very small, very serious cat has a question for you. Say yes. (You have no choice.)" />
+  <meta name="theme-color" content="#ff5c8a" />
+  <title>Will you be mine? · a cat asks</title>
+
+  <link rel="icon" href="favicon.png" />
+
+  <!-- Playful display font, loaded non-render-blocking -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap"
+  />
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="stage">
+    <!-- Sound toggle: sounds are gesture-triggered, but give users control anyway -->
+    <button id="sound-toggle" class="sound-toggle" type="button"
+            aria-pressed="true" aria-label="Mute sound effects" title="Sound on">
+      <span aria-hidden="true">🔊</span>
+    </button>
+
+    <section class="card" aria-labelledby="question">
+      <div class="media">
+        <!-- Muted looping videos stand in for gifs: far lighter & smoother -->
+        <video id="cat-ask" class="cat is-visible" src="./cat-ask.mp4"
+               autoplay loop muted playsinline
+               aria-label="A shy kitten peeking out from behind its paw"></video>
+        <video id="cat-yes" class="cat" src="./cat-yes.mp4"
+               loop muted playsinline preload="auto"
+               aria-label="A happy kitten hugging its own paws with joy"></video>
+      </div>
+
+      <!-- aria-live so the changing question is announced to screen readers -->
+      <h1 id="question" class="question" aria-live="polite">Will you be mine? 🐾</h1>
+      <p id="subtitle" class="subtitle">asked by a very small, very serious cat</p>
+
+      <div id="btn-group" class="btn-group">
+        <button id="yes-btn" class="btn btn--yes" type="button">Yes 💕</button>
+        <button id="no-btn" class="btn btn--no" type="button">No</button>
+      </div>
+
+      <button id="again" class="again" type="button" hidden>ask me again ↺</button>
+    </section>
+  </main>
+
+  <!-- Overlay layer for the heart burst; pointer-events off so it never blocks clicks -->
+  <div id="hearts" class="hearts" aria-hidden="true"></div>
+
+  <script type="module" src="./script.js"></script>
+</body>
+</html>
